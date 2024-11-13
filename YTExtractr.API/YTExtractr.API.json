@@ -1,0 +1,236 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "YTExtractr.API | v1",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/YouTube/Video/{id}": {
+      "get": {
+        "tags": [
+          "YouTubeVideo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "H7E3G1PEOAY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Video"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Video"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Video"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/YouTube/Video/{id}/Streams": {
+      "get": {
+        "tags": [
+          "YouTubeVideo"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "H7E3G1PEOAY"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Author": {
+        "required": [
+          "channelId",
+          "channelTitle"
+        ],
+        "type": "object",
+        "properties": {
+          "channelId": {
+            "$ref": "#/components/schemas/ChannelId"
+          },
+          "channelUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "channelTitle": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ChannelId": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "Engagement": {
+        "required": [
+          "viewCount",
+          "likeCount",
+          "dislikeCount"
+        ],
+        "type": "object",
+        "properties": {
+          "viewCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "likeCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dislikeCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "averageRating": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "Resolution": {
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "area": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Thumbnail": {
+        "required": [
+          "url",
+          "resolution"
+        ],
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "resolution": {
+            "$ref": "#/components/schemas/Resolution"
+          }
+        }
+      },
+      "Video": {
+        "required": [
+          "id",
+          "title",
+          "author",
+          "uploadDate",
+          "description",
+          "duration",
+          "thumbnails",
+          "keywords",
+          "engagement"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/VideoId"
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string"
+          },
+          "author": {
+            "$ref": "#/components/schemas/Author"
+          },
+          "uploadDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": "string"
+          },
+          "duration": {
+            "pattern": "^-?(\\d+\\.)?\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,7})?$",
+            "type": "string",
+            "nullable": true
+          },
+          "thumbnails": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Thumbnail"
+            }
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "engagement": {
+            "$ref": "#/components/schemas/Engagement"
+          }
+        }
+      },
+      "VideoId": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "YouTubeVideo"
+    }
+  ]
+}
